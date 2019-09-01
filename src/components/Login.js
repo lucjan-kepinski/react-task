@@ -1,50 +1,106 @@
 import React, { useState } from 'react';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import AppBar from '@material-ui/core/AppBar'
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { } from '@material-ui/core/'
-import authenticate from '../App.js'
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-const handleClick = (event) => {
-    console.log('dupa')
-}
+export const signIn = () => {
 
-export const Login = initialState => {
-
-    const [state, setState] = useState(initialState)
+console.log("hello")
 
 
-
-    return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-          <AppBar
-             title="Login"
-           />
-           <TextField
-             hintText="Enter your Username"
-             floatingLabelText="Username"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
-             />
-           <br/>
-             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({password:newValue})}
-               />
-             <br/>
-             <Button label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}>
-             Zaloguj Się </Button>
-         </div>
-         </MuiThemeProvider>
-      </div>
-    );
-}
-
-const style = {
- margin: 15,
 };
-export default Login;
+
+const useStyles = makeStyles(theme => ({
+    '@global': {
+        body: {
+            backgroundColor: theme.palette.common.white,
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+export default function SignIn(props) {
+    const classes = useStyles();
+
+    const [state, setState] = useState({
+        email: '',
+        password: '',
+        isLoggedIn: false
+    })
+
+    const { onClick, onLoginChange } = props
+
+    return ( state.isLoggedIn ? <p>dupa</p> :
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <form className={classes.form} noValidate>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Adres Email"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            value={state.email}
+                            onChange={event => setState({
+                                ...state,
+                                email: event.target.value
+                            })}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Hasło"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={state.password}
+                            onChange={event => setState({
+                                ...state,
+                                password: event.target.value
+                            })}
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+
+                            className={classes.submit}
+                            onClick={(event) => onClick(event, state.email, state.password)}
+                        >
+                            Zaloguj Się
+          </Button>
+                        <Grid container>
+                        </Grid>
+                    </form>
+                </div>
+            </Container>
+    )
+}

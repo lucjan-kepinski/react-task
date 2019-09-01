@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from "./components/Login"
@@ -84,9 +84,43 @@ button.textContent = 'Dodaj';
 // document.body.appendChild(button);
 
 function App() {
+    const [state, setState] = useState({
+        email: '',
+        password: '',
+        isLoggedIn: false
+    })
+
+    const LogIn = () => setState({
+        ...state,
+        isLoggedIn: true})
+
+    function onClickSignIn(event, email, password) {
+        setState({
+            email,
+            password,
+            isLoggedIn: true})
+
+        event.preventDefault()
+
+        let userFound = false
+
+                if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
+                    return alert("sukces")
+                } else {
+                    return alert("dupa")
+                }
+
+    }
+
+function onLoginChange(event){
+     setState({
+        ...state,
+        email: event.target.value
+}}
+
   return (
     <div className="App">
-        <Login />
+        <Login onClick={(event, email, password) => onClickSignIn(event, email, password)} onChange={onLoginChange(event)}/>
     </div>
   );
 }
