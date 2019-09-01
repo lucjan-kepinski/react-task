@@ -11,7 +11,7 @@ const AUTH_OPTIONS = {
     mode: 'cors',
 };
 
-export const authenticate = async () => {
+const authenticate = async () => {
     const body = JSON.stringify({
         username: 'YNAPEyJk',
         password: 'ylYJDgFmnAIs'
@@ -54,7 +54,7 @@ const addItem = async (item) => {
             Accept: 'application/json'
         }
     });
-
+    
     return response.json();
 };
 
@@ -87,7 +87,7 @@ function App() {
     const [state, setState] = useState({
         email: '',
         password: '',
-        isLoggedIn: false
+        isLoggedIn: false,
     })
 
     const LogIn = () => setState({
@@ -106,8 +106,12 @@ function App() {
 
                 if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
                     return alert("sukces")
+                } else if (state.email === ""){
+                    return alert("Proszę podać login")
+                } else if (state.password === ""){
+                    return alert("Proszę podać hasło")
                 } else {
-                    return alert("dupa")
+                    return alert("Nieprawidłowy login lub hasło")
                 }
 
     }
@@ -116,11 +120,31 @@ function onLoginChange(event){
      setState({
         ...state,
         email: event.target.value
-}}
+})}
+
+function onPasswordChange(event){
+    setState({
+       ...state,
+       password: event.target.value
+})}
 
   return (
-    <div className="App">
-        <Login onClick={(event, email, password) => onClickSignIn(event, email, password)} onChange={onLoginChange(event)}/>
+    state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs" ?
+    <div className="App">     
+    <Login 
+    onClick={(event, email, password) => onClickSignIn(event, email, password)} 
+    onLoginChange={(event) => onLoginChange(event)}
+    onPasswordChange={(event) => onPasswordChange(event)}
+    email={state.email} 
+    password={state.password}/>
+    </div> :
+    <div className="App">     
+        <Login 
+        onClick={(event, email, password) => onClickSignIn(event, email, password)} 
+        onLoginChange={(event) => onLoginChange(event)}
+        onPasswordChange={(event) => onPasswordChange(event)}
+        email={state.email} 
+        password={state.password}/>
     </div>
   );
 }

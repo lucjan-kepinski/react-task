@@ -47,7 +47,7 @@ export default function SignIn(props) {
         isLoggedIn: false
     })
 
-    const { onClick, onLoginChange } = props
+    const { onClick, onLoginChange, onPasswordChange, email, password } = props
 
     return ( state.isLoggedIn ? <p>dupa</p> :
             <Container component="main" maxWidth="xs">
@@ -60,15 +60,12 @@ export default function SignIn(props) {
                             required
                             fullWidth
                             id="email"
-                            label="Adres Email"
+                            label="Login"
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            value={state.email}
-                            onChange={event => setState({
-                                ...state,
-                                email: event.target.value
-                            })}
+                            value={email}
+                            onChange={(event) => onLoginChange(event)}
                         />
                         <TextField
                             variant="outlined"
@@ -80,11 +77,8 @@ export default function SignIn(props) {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            value={state.password}
-                            onChange={event => setState({
-                                ...state,
-                                password: event.target.value
-                            })}
+                            value={password}
+                            onChange={event => onPasswordChange(event)}
                         />
                         <Button
                             type="submit"
