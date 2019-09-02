@@ -75,6 +75,16 @@ function App() {
       });
   };
 
+  const onLogoutClick = () =>
+  { if (window.confirm("Czy na pewno chcesz się wylogować?")) { 
+    setState({
+      ...state,
+      items: [],
+      isLoggedIn: false
+    });
+  }
+  }
+
   return (
     <>
       {console.log(state)}
@@ -82,7 +92,7 @@ function App() {
         <>
           <SimpleTable rows={state.items} />
           <AddButton OnClick={OnClick} />
-          <DeleteButton />
+          <LogOutButton onLogoutClick={onLogoutClick}/>
         </>
       ) : (
         <div className="App">
@@ -110,11 +120,11 @@ function AddButton(props) {
   );
 }
 
-function DeleteButton(props) {
-  const { OnClick } = props;
+function LogOutButton(props) {
+  const { onLogoutClick } = props;
   return (
-    <Button variant="contained" color="primary">
-      Usuń
+    <Button variant="contained" color="primary" onClick={()=> onLogoutClick()}>
+      Wyloguj
     </Button>
   );
 }
