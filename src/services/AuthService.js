@@ -12,7 +12,10 @@ export const authenticate = async () => {
     password: "ylYJDgFmnAIs"
   });
 
-  const response = await fetch(`${REST_API_URL}/api/authenticate`, {
+  let bearer = ''
+
+
+  await fetch(`${REST_API_URL}/api/authenticate`, {
     method: "post",
     ...AUTH_OPTIONS,
     body,
@@ -20,13 +23,22 @@ export const authenticate = async () => {
       "Content-Type": "application/json",
       Accept: "application/json"
     }
-  });
-  setTimeout(() => {
-    // const newResponse = response.getAllResponseHeaders();
-    console.log(response);
-  }, 3000);
+  }).then(resp => {
+    resp.headers.forEach((header) => {
 
-  return response.text();
+      const bearerRegex = /Bearer/
+
+      if (bearerRegex.exec(header)) {
+ 
+        bearer = header
+      } else { return }
+    }
+
+    )
+  })
+
+
+  return bearer;
 };
 
 export const retrieveItems = async () => {
@@ -60,13 +72,11 @@ export const addItem = async item => {
 };
 
 export const main = async () => {
-  await authenticate();
 
+  const token = await authenticate()
   const items = await retrieveItems();
 
-  console.log(items);
-
-  return items
+  return { items, token }
 };
 
 // main().catch(error => console.error(error));
