@@ -12,29 +12,43 @@ import SimpleTable from "./components/Table";
 import Button from "@material-ui/core/Button";
 
 function App() {
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-    isLoggedIn: false
-  });
+    const [state, setState] = useState({
+        email: '',
+        password: '',
+        isLoggedIn: false,
+        token: ''
+    })
 
-  const LogIn = () =>
-    setState({
-      ...state,
-      isLoggedIn: true
-    });
+    const LogIn = () => setState({
+        ...state,
+        isLoggedIn: true
+    })
 
-  function onClickSignIn(event, email, password) {
-    const newitems = main().then(items =>
-      setState({
-        email,
-        password,
-        isLoggedIn: true,
-        items
-      })
-    );
+    function onClickSignIn(event, email, password) {
+        event.preventDefault()
 
-    event.preventDefault();
+        main().then((response) =>
+
+            setState({
+                email,
+                password,
+                isLoggedIn: true,
+                items: response.items,
+                token: response.token
+            }))
+
+
+
+
+        if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
+            return alert("sukces")
+        } else if (state.email === "") {
+            return alert("Proszę podać login")
+        } else if (state.password === "") {
+            return alert("Proszę podać hasło")
+        } else {
+            return alert("Nieprawidłowy login lub hasło")
+        }
 
     if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
       return alert("sukces");
