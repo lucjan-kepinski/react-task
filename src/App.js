@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from "./components/Login"
-import { authenticate, retrieveItems, main } from "./services/AuthService"
+import { authenticate, retrieveItems, addItem, main } from "./services/AuthService"
 
 function App() {
     const [state, setState] = useState({
@@ -16,15 +16,12 @@ function App() {
         isLoggedIn: true})
 
     function onClickSignIn(event, email, password) {
-        const items = main()
-        setTimeout(() => 
-            setState({
-                email,
-                password,
-                isLoggedIn: true,
-                items
-          }), 3000)
-        
+        const newitems = main().then(items => setState({
+            email,
+            password,
+            isLoggedIn: true,
+            items
+        }))
 
         event.preventDefault()
 
@@ -52,11 +49,25 @@ function onPasswordChange(event){
        password: event.target.value,
 })}
 
+const OnClick = () => {
+    console.log("click");
+  
+    const name = "abc";
+    const item = { name };
+  
+    addItem(item).catch(error => console.error(error));
+  };
+
   return ( <>{console.log(state)}
     {state.isLoggedIn ?
+    <>
     <div className="App">     
-        dupa
-    </div> :
+        {state.items.map(item => (
+            <p>{item.id}{item.name}</p>
+       ))}</div>
+       <AddButton OnClick={OnClick}/>
+       <DeleteButton />
+       </> :
     <div className="App">     
         <Login 
         onClick={(event, email, password) => onClickSignIn(event, email, password)} 
@@ -66,6 +77,28 @@ function onPasswordChange(event){
         password={state.password}/>
     </div>}
   </>);
+}
+
+function AddButton(props) {
+    const { OnClick } = props
+    return(
+        <button
+        onClick={()=>OnClick()}
+      >
+       Dodaj
+      </button>
+    )
+    }
+
+function DeleteButton(props) {
+    const { OnClick } = props
+    return(
+        <button
+        onClick={()=>OnClick()}
+    >
+    Usuń
+    </button>
+    )
 }
 
 export default App;

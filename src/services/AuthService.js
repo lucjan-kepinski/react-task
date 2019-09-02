@@ -34,7 +34,7 @@ export const retrieveItems = async () => {
     ...AUTH_OPTIONS,
     headers: {
       Authorization:
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6IllOQVBFeUprIiwiZXhwIjoxNTY4MjA1NTMwLCJyb2wiOlsiVXNlciJdfQ.2wMBMUUb8FENFj2zOGKCyeYEQLpL1bVthoaGvgTFMYTzl12x9oEApk4hZC88h6Xma-SIC9D5rS09op-7R3RAGQ",
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6IllOQVBFeUprIiwiZXhwIjoxNTY4Mjg1MTE4LCJyb2wiOlsiVXNlciJdfQ.JP3fYRcp1afsl1Kj40qTyoo7FOzfWAyug7cV-YhynAF7Qr2CbdBIcYIsy6u89pDSBP2XdBk7yt_ScmiYPoRMmg",
       "Content-Type": "application/json",
       Accept: "application/json"
     }
@@ -43,20 +43,20 @@ export const retrieveItems = async () => {
   return response.json();
 };
 
-export const addItem = async item => {
+export const addItem = async (item) => {
   const response = await fetch(`${REST_API_URL}/api/v1/item`, {
     method: "post",
     ...AUTH_OPTIONS,
     body: JSON.stringify(item),
     headers: {
       Authorization:
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6IllOQVBFeUprIiwiZXhwIjoxNTY4MjA1NTMwLCJyb2wiOlsiVXNlciJdfQ.2wMBMUUb8FENFj2zOGKCyeYEQLpL1bVthoaGvgTFMYTzl12x9oEApk4hZC88h6Xma-SIC9D5rS09op-7R3RAGQ",
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6IllOQVBFeUprIiwiZXhwIjoxNTY4Mjg1MTE4LCJyb2wiOlsiVXNlciJdfQ.JP3fYRcp1afsl1Kj40qTyoo7FOzfWAyug7cV-YhynAF7Qr2CbdBIcYIsy6u89pDSBP2XdBk7yt_ScmiYPoRMmg",
       "Content-Type": "application/json",
       Accept: "application/json"
     }
   });
-
-  return response.json();
+  console.log(JSON.stringify(item))
+  return response.text();
 };
 
 export const main = async () => {
@@ -69,7 +69,7 @@ export const main = async () => {
   return items
 };
 
-// main().catch(error => console.error(error));
+main().catch(error => console.error(error));
 
 const button = document.createElement("button");
 
