@@ -65,6 +65,8 @@ export const main = async () => {
   const items = await retrieveItems();
 
   console.log(items);
+
+  return items
 };
 
 // main().catch(error => console.error(error));

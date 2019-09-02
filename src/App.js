@@ -16,11 +16,15 @@ function App() {
         isLoggedIn: true})
 
     function onClickSignIn(event, email, password) {
-        authenticate().then(newToken => setState({...state, token: newToken}))
-        setState({
-            email,
-            password,
-            isLoggedIn: true})
+        const items = main()
+        setTimeout(() => 
+            setState({
+                email,
+                password,
+                isLoggedIn: true,
+                items
+          }), 3000)
+        
 
         event.preventDefault()
 
