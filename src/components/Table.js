@@ -33,8 +33,8 @@ const useStyles = makeStyles(theme => ({
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Numer</TableCell>
-              <TableCell>Imię</TableCell>
+              <TableCell>Numer wpisu</TableCell>
+              <TableCell>Treść</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

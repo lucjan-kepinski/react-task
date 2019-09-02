@@ -16,7 +16,6 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import { ItemList } from "./components/ItemList"
 
 const NoMatch = () => <h1>404</h1>;
 
@@ -108,18 +107,27 @@ const UserLogin = () => {
   </div>)
 }
 
+const ItemList = (props) => {
+  const { rows, OnClick, onLogoutClick } = props
+  return ( <div>
+    <SimpleTable rows={rows} />
+    <AddButton OnClick={OnClick} />
+    <LogOutButton onLogoutClick={onLogoutClick}/>
+    </div>
+  )
+}
+
   return (
     <>
       {console.log(state)}
       <Router>
           <div>
             <Switch>
-              {state.isLoggedIn ? <><Route exact path="/items" component={ItemList} />
+              {state.isLoggedIn ? <><Redirect from="/" to="/items" />
+              <Route exact path="/items" render={(props) => <ItemList {...props} rows={state.items} OnClick={OnClick} onLogoutClick={onLogoutClick}/>}/>
               </>
-              : <><Route exact path="/" component={UserLogin}/>
+              : <><Redirect from="/items" to="/" /><Route exact path="/" component={UserLogin}/>
               </>}
-              <Redirect from="/home" to="/" />
-              <Route component={NoMatch} />
             </Switch>
           </div>
       </Router>
