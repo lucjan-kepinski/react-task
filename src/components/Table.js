@@ -24,15 +24,6 @@ const useStyles = makeStyles(theme => ({
     },
   }));
   
-  function createData(id, name) {
-    return { id, name};
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  ];
-  
   export default function SimpleTable(props) {
     const { rows } = props
     const classes = useStyles();
@@ -42,8 +33,8 @@ const useStyles = makeStyles(theme => ({
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell>Calories</TableCell>
+              <TableCell>Numer</TableCell>
+              <TableCell>Imię</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -54,7 +45,7 @@ const useStyles = makeStyles(theme => ({
                 </TableCell>
                 <TableCell>{row.name}</TableCell>
               </TableRow>
-            ))}
+            )).reverse().slice(1,10)}
           </TableBody>
         </Table>
       </Paper> : <Spinner/>
