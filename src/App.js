@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Login from "./components/Login"
 import { authenticate, retrieveItems, addItem, main } from "./services/AuthService"
+import SimpleTable from "./components/Table"
+import Button from "@material-ui/core/Button"
 
 function App() {
     const [state, setState] = useState({
@@ -61,10 +63,7 @@ const OnClick = () => {
   return ( <>{console.log(state)}
     {state.isLoggedIn ?
     <>
-    <div className="App">     
-        {state.items.map(item => (
-            <p>{item.id}{item.name}</p>
-       ))}</div>
+        <SimpleTable rows={state.items}/>
        <AddButton OnClick={OnClick}/>
        <DeleteButton />
        </> :
@@ -82,23 +81,18 @@ const OnClick = () => {
 function AddButton(props) {
     const { OnClick } = props
     return(
-        <button
-        onClick={()=>OnClick()}
-      >
+        <Button variant="contained" color="primary" onClick={()=>OnClick()}>
        Dodaj
-      </button>
+       </Button>
     )
     }
 
 function DeleteButton(props) {
     const { OnClick } = props
     return(
-        <button
-        onClick={()=>OnClick()}
-    >
-    Usuń
-    </button>
+        <Button variant="contained" color="primary">Usuń</Button>
     )
 }
+
 
 export default App;
