@@ -55,8 +55,8 @@ export const addItem = async (item) => {
       Accept: "application/json"
     }
   });
-  console.log(JSON.stringify(item))
-  return response.text();
+  console.log(response)
+  return response
 };
 
 export const main = async () => {

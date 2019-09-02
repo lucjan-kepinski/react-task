@@ -7,6 +7,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+const Spinner = () => {
+    return <p>
+    elo
+  </p>
+}
+
 const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -30,8 +36,8 @@ const useStyles = makeStyles(theme => ({
   export default function SimpleTable(props) {
     const { rows } = props
     const classes = useStyles();
-  
-    return (
+
+    return ( rows !== undefined ?
       <Paper  className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
@@ -51,6 +57,6 @@ const useStyles = makeStyles(theme => ({
             ))}
           </TableBody>
         </Table>
-      </Paper>
+      </Paper> : <Spinner/>
     );
   }
