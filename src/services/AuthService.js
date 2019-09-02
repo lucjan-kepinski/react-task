@@ -49,7 +49,7 @@ export const addItem = async (item) => {
       Accept: "application/json"
     }
   });
-  console.log(response)
+
   return response
 };
 
@@ -57,25 +57,6 @@ export const main = async () => {
   await authenticate();
 
   const items = await retrieveItems();
-
-  console.log(items);
-
+  
   return items
 };
-
-main().catch(error => console.error(error));
-
-const button = document.createElement("button");
-
-button.onclick = () => {
-  console.log("click");
-
-  const name = "abc";
-  const item = { name };
-
-  addItem(item).catch(error => console.error(error));
-};
-
-button.textContent = "Dodaj";
-
-// document.body.appendChild(button);

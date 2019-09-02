@@ -6,13 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-export const signIn = () => {
-
-console.log("hello")
-
-
-};
-
 const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
@@ -30,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -49,8 +42,7 @@ export default function SignIn(props) {
 
     const { onClick, onLoginChange, onPasswordChange, email, password } = props
 
-    return ( state.isLoggedIn ? <p>dupa</p> :
-            <Container component="main" maxWidth="xs">
+    return (    <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
                     <form className={classes.form} noValidate>
@@ -90,7 +82,7 @@ export default function SignIn(props) {
                             onClick={(event) => onClick(event, state.email, state.password)}
                         >
                             Zaloguj Się
-          </Button>
+                        </Button>
                         <Grid container>
                         </Grid>
                     </form>

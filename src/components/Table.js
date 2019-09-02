@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,6 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {
+  retrieveItems,
+} from "../services/AuthService";
 
 const Spinner = () => {
     return <p>
@@ -25,10 +28,17 @@ const useStyles = makeStyles(theme => ({
   }));
   
   export default function SimpleTable(props) {
-    const { rows } = props
+    const { newrows } = props
     const classes = useStyles();
+    const [state, setState] = useState({
+      newrows
+    });
 
-    return ( rows !== undefined ?
+    retrieveItems()
+      .then((rows) =>
+        setState({newrows: rows}))
+
+    return ( state.newrows !== undefined ?
       <Paper  className={classes.root}>
         <Table className={classes.table}>
           <TableHead>
@@ -38,7 +48,7 @@ const useStyles = makeStyles(theme => ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
+            {state.newrows.map(row => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
                   {row.id}

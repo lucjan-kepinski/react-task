@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/Login";
@@ -16,6 +16,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
 
 const NoMatch = () => <h1>404</h1>;
 
@@ -26,14 +27,8 @@ function App() {
     isLoggedIn: false
   });
 
-  const LogIn = () =>
-    setState({
-      ...state,
-      isLoggedIn: true
-    });
-
   function onClickSignIn(event, email, password) {
-    const newitems = main().then(items =>
+    main().catch(error => console.error(error)).then(items =>
       setState({
         email,
         password,
@@ -45,7 +40,7 @@ function App() {
     event.preventDefault();
 
     if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
-      return alert("sukces");
+      return
     } else if (state.email === "") {
       return alert("Proszę podać login");
     } else if (state.password === "") {
@@ -69,18 +64,25 @@ function App() {
     });
   }
 
-  const OnClick = () => {
-    console.log("click");
+  function onInputChange(event) {
+    setState({
+      ...state,
+      newitem: event.target.value
+    });
+  }
 
-    const name = "abc";
+  const OnAddClick = () => {
+
+    const name = state.newitem;
     const item = { name };
 
     addItem(item)
       .catch(error => console.error(error))
-      .then(() => {
-        retrieveItems().then((newItems) =>
-        setState({...state, items: newItems}))
-      });
+      .then(() => retrieveItems())
+      .then((newItems) =>
+        setState({...state, newitem: "", items: newItems}))
+
+    
   };
 
   const onLogoutClick = () =>
@@ -108,10 +110,27 @@ const UserLogin = () => {
 }
 
 const ItemList = (props) => {
-  const { rows, OnClick, onLogoutClick } = props
+  const { rows, OnClick, onLogoutClick, newitem } = props
+  const [state, setState] = useState({
+    rows
+  });
+
   return ( <div>
-    <SimpleTable rows={rows} />
-    <AddButton OnClick={OnClick} />
+    <SimpleTable newrows={state.rows} />
+    <TextField
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    id="newelement"
+    label="Dodaj nowy element"
+    name="newelement"
+    autoComplete="email"
+    autoFocus
+    value={newitem}
+    onChange={(event) => onInputChange(event)}
+    />
+    <AddButton OnClick={() => OnClick()} />
     <LogOutButton onLogoutClick={onLogoutClick}/>
     </div>
   )
@@ -119,12 +138,11 @@ const ItemList = (props) => {
 
   return (
     <>
-      {console.log(state)}
       <Router>
           <div>
             <Switch>
               {state.isLoggedIn ? <><Redirect from="/" to="/items" />
-              <Route exact path="/items" render={(props) => <ItemList {...props} rows={state.items} OnClick={OnClick} onLogoutClick={onLogoutClick}/>}/>
+              <Route exact path="/items" render={(props) => <ItemList {...props} OnClick={OnAddClick} rows={state.items} onLogoutClick={onLogoutClick} newitem={state.newitem}/>}/>
               </>
               : <><Redirect from="/items" to="/" /><Route exact path="/" component={UserLogin}/>
               </>}
