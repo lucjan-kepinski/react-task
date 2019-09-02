@@ -1,6 +1,4 @@
 const REST_API_URL = "http://frontend-recruitment.one2tribe.pl:8080";
-// const REST_API_URL = 'http://localhost:3000';
-
 const AUTH_OPTIONS = {
   credentials: "include",
   mode: "cors"
@@ -21,10 +19,6 @@ export const authenticate = async () => {
       Accept: "application/json"
     }
   });
-  setTimeout(() => {
-    // const newResponse = response.getAllResponseHeaders();
-    console.log(response);
-  }, 3000);
 
   return response.text();
 };

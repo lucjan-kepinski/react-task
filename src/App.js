@@ -10,6 +10,15 @@ import {
 } from "./services/AuthService";
 import SimpleTable from "./components/Table";
 import Button from "@material-ui/core/Button";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import { ItemList } from "./components/ItemList"
+
+const NoMatch = () => <h1>404</h1>;
 
 function App() {
   const [state, setState] = useState({
@@ -85,28 +94,35 @@ function App() {
   }
   }
 
+const UserLogin = () => {
+  return ( <div>
+    <Login 
+    onClick={(event, email, password) =>
+      onClickSignIn(event, email, password)
+    }
+    onLoginChange={event => onLoginChange(event)}
+    onPasswordChange={event => onPasswordChange(event)}
+    email={state.email}
+    password={state.password}
+  />
+  </div>)
+}
+
   return (
     <>
       {console.log(state)}
-      {state.isLoggedIn ? (
-        <>
-          <SimpleTable rows={state.items} />
-          <AddButton OnClick={OnClick} />
-          <LogOutButton onLogoutClick={onLogoutClick}/>
-        </>
-      ) : (
-        <div className="App">
-          <Login
-            onClick={(event, email, password) =>
-              onClickSignIn(event, email, password)
-            }
-            onLoginChange={event => onLoginChange(event)}
-            onPasswordChange={event => onPasswordChange(event)}
-            email={state.email}
-            password={state.password}
-          />
-        </div>
-      )}
+      <Router>
+          <div>
+            <Switch>
+              {state.isLoggedIn ? <><Route exact path="/items" component={ItemList} />
+              </>
+              : <><Route exact path="/" component={UserLogin}/>
+              </>}
+              <Redirect from="/home" to="/" />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+      </Router>
     </>
   );
 }
