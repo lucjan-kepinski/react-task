@@ -49,16 +49,6 @@ function App() {
         } else {
             return alert("Nieprawidłowy login lub hasło")
         }
-
-    if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
-      return alert("sukces");
-    } else if (state.email === "") {
-      return alert("Proszę podać login");
-    } else if (state.password === "") {
-      return alert("Proszę podać hasło");
-    } else {
-      return alert("Nieprawidłowy login lub hasło");
-    }
   }
 
   function onLoginChange(event) {
