@@ -31,7 +31,7 @@ export const authenticate = async () => {
       }
     });
   });
-  console.log(bearer);
+
   return bearer;
 };
 
@@ -59,7 +59,7 @@ export const addItem = async (item, bearer) => {
       Accept: "application/json"
     }
   });
-  console.log(response);
+
   return response;
 };
 

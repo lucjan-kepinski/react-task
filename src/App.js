@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import "./App.css";
 import Login from "./components/Login";
+import {ItemList} from "./components/ItemList";
 import {
   retrieveItems,
   addItem,
   main
 } from "./services/AuthService";
-import ItemTable from "./components/Table";
-import Button from "@material-ui/core/Button";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect
 } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
 
 function App() {
   const [state, setState] = useState({
@@ -105,31 +103,6 @@ function App() {
     );
   };
 
-  const ItemList = props => {
-    const { rows, OnClick, onLogoutClick, newitem } = props;
-
-    return (
-      <div>
-        <ItemTable newrows={rows} />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="newelement"
-          label="Dodaj nowy element"
-          name="newelement"
-          autoComplete="email"
-          autoFocus
-          value={newitem}
-          onChange={event => onInputChange(event)}
-        />
-        <AddButton OnClick={() => OnClick()} />
-        <LogOutButton onLogoutClick={onLogoutClick} />
-      </div>
-    );
-  };
-
   return (
     <>
       <Router>
@@ -148,6 +121,7 @@ function App() {
                       rows={state.items}
                       onLogoutClick={onLogoutClick}
                       newitem={state.newitem}
+                      onInputChange={onInputChange}
                     />
                   )}
                 />
@@ -162,24 +136,6 @@ function App() {
         </div>
       </Router>
     </>
-  );
-}
-
-function AddButton(props) {
-  const { OnClick } = props;
-  return (
-    <Button variant="contained" color="primary" onClick={() => OnClick()}>
-      Dodaj
-    </Button>
-  );
-}
-
-function LogOutButton(props) {
-  const { onLogoutClick } = props;
-  return (
-    <Button variant="contained" color="primary" onClick={() => onLogoutClick()}>
-      Wyloguj
-    </Button>
   );
 }
 
