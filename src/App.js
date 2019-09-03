@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/Login";
@@ -24,7 +24,8 @@ function App() {
   const [state, setState] = useState({
     email: "",
     password: "",
-    isLoggedIn: false
+    isLoggedIn: false,
+    token: ""
   });
 
   function onClickSignIn(event, email, password) {
@@ -32,11 +33,12 @@ function App() {
     event.preventDefault();
 
     if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
-      main().catch(error => console.error(error)).then(items =>
+      main().catch(error => console.error(error)).then(response =>
       setState({        
         email,
         password,
-        items, 
+        items: response.items,
+        token: response.token,
         isLoggedIn: true}))
     } else if (state.email === "") {
       return alert("Proszę podać login");

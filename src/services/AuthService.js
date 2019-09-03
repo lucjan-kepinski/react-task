@@ -10,6 +10,8 @@ export const authenticate = async () => {
     password: "ylYJDgFmnAIs"
   });
 
+  let bearer = ''
+
   const response = await fetch(`${REST_API_URL}/api/authenticate`, {
     method: "post",
     ...AUTH_OPTIONS,
@@ -18,45 +20,51 @@ export const authenticate = async () => {
       "Content-Type": "application/json",
       Accept: "application/json"
     }
-  });
+  }).then(resp => {
+    resp.headers.forEach((header) => {
+    
+    const bearerRegex = /Bearer/
+    
+    if (bearerRegex.exec(header)) {
+    bearer = header
+    } else { return }}
+    )
+    })
+  
+  return bearer;
+  };
 
-  return response.text();
-};
-
-export const retrieveItems = async () => {
+export const retrieveItems = async (bearer) => {
   const response = await fetch(`${REST_API_URL}/api/v1/item`, {
-    ...AUTH_OPTIONS,
-    headers: {
-      Authorization:
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6IllOQVBFeUprIiwiZXhwIjoxNTY4Mjg1MTE4LCJyb2wiOlsiVXNlciJdfQ.JP3fYRcp1afsl1Kj40qTyoo7FOzfWAyug7cV-YhynAF7Qr2CbdBIcYIsy6u89pDSBP2XdBk7yt_ScmiYPoRMmg",
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    }
+  ...AUTH_OPTIONS,
+  headers: {
+  Authorization: bearer,
+  "Content-Type": "application/json",
+  Accept: "application/json"
+  }
   });
   
   return response.json();
-};
-
-export const addItem = async (item) => {
+  };
+  
+  export const addItem = async (item, bearer) => {
   const response = await fetch(`${REST_API_URL}/api/v1/item`, {
-    method: "post",
-    ...AUTH_OPTIONS,
-    body: JSON.stringify(item),
-    headers: {
-      Authorization:
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6IllOQVBFeUprIiwiZXhwIjoxNTY4Mjg1MTE4LCJyb2wiOlsiVXNlciJdfQ.JP3fYRcp1afsl1Kj40qTyoo7FOzfWAyug7cV-YhynAF7Qr2CbdBIcYIsy6u89pDSBP2XdBk7yt_ScmiYPoRMmg",
-      "Content-Type": "application/json",
-      Accept: "application/json"
-    }
+  method: "post",
+  ...AUTH_OPTIONS,
+  body: JSON.stringify(item),
+  headers: {
+  Authorization: bearer,
+  "Content-Type": "application/json",
+  Accept: "application/json"
+  }
   });
-
+  console.log(response)
   return response
-};
+  };
 
 export const main = async () => {
-  await authenticate();
-
+  const token = await authenticate()
   const items = await retrieveItems();
-  
-  return items
+
+  return { items, token }
 };
