@@ -27,16 +27,12 @@ const useStyles = makeStyles(theme => ({
     },
   }));
   
-  export default function SimpleTable(props) {
+  export default function ItemTable(props) {
     const { newrows } = props
     const classes = useStyles();
     const [state, setState] = useState({
       newrows
     });
-
-    retrieveItems()
-      .then((rows) =>
-        setState({newrows: rows}))
 
     return ( state.newrows !== undefined ?
       <Paper  className={classes.root}>

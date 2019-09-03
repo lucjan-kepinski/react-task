@@ -8,7 +8,7 @@ import {
   addItem,
   main
 } from "./services/AuthService";
-import SimpleTable from "./components/Table";
+import ItemTable from "./components/Table";
 import Button from "@material-ui/core/Button";
 import {
   BrowserRouter as Router,
@@ -28,19 +28,16 @@ function App() {
   });
 
   function onClickSignIn(event, email, password) {
-    main().catch(error => console.error(error)).then(items =>
-      setState({
-        email,
-        password,
-        isLoggedIn: true,
-        items
-      })
-    );
 
     event.preventDefault();
 
     if (state.email === "YNAPEyJk" && state.password === "ylYJDgFmnAIs") {
-      return
+      main().catch(error => console.error(error)).then(items =>
+      setState({        
+        email,
+        password,
+        items, 
+        isLoggedIn: true}))
     } else if (state.email === "") {
       return alert("Proszę podać login");
     } else if (state.password === "") {
@@ -111,12 +108,9 @@ const UserLogin = () => {
 
 const ItemList = (props) => {
   const { rows, OnClick, onLogoutClick, newitem } = props
-  const [state, setState] = useState({
-    rows
-  });
 
   return ( <div>
-    <SimpleTable newrows={state.rows} />
+    <ItemTable newrows={rows} />
     <TextField
     variant="outlined"
     margin="normal"

@@ -33,7 +33,7 @@ export const retrieveItems = async () => {
       Accept: "application/json"
     }
   });
-
+  
   return response.json();
 };
 
