@@ -4,13 +4,13 @@ const AUTH_OPTIONS = {
   mode: "cors"
 };
 
+let bearer = "";
+
 export const authenticate = async () => {
   const body = JSON.stringify({
     username: "YNAPEyJk",
     password: "ylYJDgFmnAIs"
   });
-
-  let bearer = ''
 
   const response = await fetch(`${REST_API_URL}/api/authenticate`, {
     method: "post",
@@ -21,50 +21,51 @@ export const authenticate = async () => {
       Accept: "application/json"
     }
   }).then(resp => {
-    resp.headers.forEach((header) => {
-    
-    const bearerRegex = /Bearer/
-    
-    if (bearerRegex.exec(header)) {
-    bearer = header
-    } else { return }}
-    )
-    })
-  
-  return bearer;
-  };
+    resp.headers.forEach(header => {
+      const bearerRegex = /Bearer/;
 
-export const retrieveItems = async (bearer) => {
-  const response = await fetch(`${REST_API_URL}/api/v1/item`, {
-  ...AUTH_OPTIONS,
-  headers: {
-  Authorization: bearer,
-  "Content-Type": "application/json",
-  Accept: "application/json"
-  }
+      if (bearerRegex.exec(header)) {
+        bearer = header;
+      } else {
+        return;
+      }
+    });
   });
-  
+  console.log(bearer);
+  return bearer;
+};
+
+export const retrieveItems = async bearer => {
+  const response = await fetch(`${REST_API_URL}/api/v1/item`, {
+    ...AUTH_OPTIONS,
+    headers: {
+      Authorization: bearer,
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    }
+  });
+
   return response.json();
-  };
-  
-  export const addItem = async (item, bearer) => {
+};
+
+export const addItem = async (item, bearer) => {
   const response = await fetch(`${REST_API_URL}/api/v1/item`, {
-  method: "post",
-  ...AUTH_OPTIONS,
-  body: JSON.stringify(item),
-  headers: {
-  Authorization: bearer,
-  "Content-Type": "application/json",
-  Accept: "application/json"
-  }
+    method: "post",
+    ...AUTH_OPTIONS,
+    body: JSON.stringify(item),
+    headers: {
+      Authorization: bearer,
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    }
   });
-  console.log(response)
-  return response
-  };
+  console.log(response);
+  return response;
+};
 
 export const main = async () => {
-  const token = await authenticate()
-  const items = await retrieveItems();
+  const token = await authenticate();
+  const items = await retrieveItems(bearer);
 
-  return { items, token }
+  return { items, token };
 };
