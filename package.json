@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.4.0",
+    "gh-pages": "^2.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
@@ -12,12 +13,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d public"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "https://lucjan-kepinski.github.io/Twitter-gallery/",
   "browserslist": {
     "production": [
       ">0.2%",
